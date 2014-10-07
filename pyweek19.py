@@ -14,6 +14,11 @@ TILE_SIZE = 32
 
 # image constants
 WALL_IMG = 'block.gif'
+TRAP_IMG = 'spikes.gif'
+PLAYER_IMG = 'player.gif'
+SWITCH_IMG = 'switch.gif'
+GOAL_IMG = 'goal_animation.gif'
+PLAYER_IMG = 'player.gif'
 
 
 BACKGROUND_COLOR = (222, 222, 222)
@@ -34,17 +39,58 @@ def load_image(name, colorkey=None):
     return image, image.get_rect()
 
 # sprites
-class WallSprite(pygame.sprite.Sprite):
+class TileSprite(pygame.sprite.Sprite):
+    def __init__(self, screen, x, y, image):
+        pygame.sprite.Sprite.__init__(self)
+        self.x = x
+        self.y = y
+        self.screen = screen
+        self.image, self.rect = load_image(image)
+
+    def update(self):
+        self.rect.topleft = (self.x * TILE_SIZE, self.y * TILE_SIZE)
+        self.screen.blit(self.image, self.rect)
+
+class WallSprite(TileSprite):
+    def __init__(self, screen, x, y):
+        TileSprite.__init__(self, screen, x, y, WALL_IMG)
+
+class TrapSprite(TileSprite):
+    def __init__(self, screen, x, y):
+        TileSprite.__init__(self, screen, x, y, TRAP_IMG)
+
+class SwitchSprite(TileSprite):
+    def __init__(self, screen, x, y):
+        TileSprite.__init__(self, screen, x, y, SWITCH_IMG)
+
+class GoalSprite(TileSprite):
+    def __init__(self, screen, x, y):
+        TileSprite.__init__(self, screen, x, y, GOAL_IMG)
+
+class PlayerSprite(pygame.sprite.Sprite):
     def __init__(self, screen, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.x = x
         self.y = y
         self.screen = screen
-        self.image, self.rect = load_image(WALL_IMG)
+        self.image, self.rect = load_image(PLAYER_IMG)
 
     def update(self):
         self.rect.topleft = (self.x * TILE_SIZE, self.y * TILE_SIZE)
         self.screen.blit(self.image, self.rect)
+
+    def move_up(self):
+        self.y -= 1
+
+    def move_down(self):
+        self.y += 1
+
+    def move_left(self):
+        self.x -= 1
+
+    def move_right(self):
+        self.x += 1
+
 
 
 def main_loop():
@@ -67,10 +113,41 @@ def main_loop():
              [0,0,0,0,0,0,0,0,0,0,0], \
              [0,0,0,0,0,0,0,0,0,0,0]]
 
+    board = [[1,1,1,1,1,1,1,1,1,1,1], \
+             [1,0,0,0,0,5,0,0,0,0,1], \
+             [1,0,0,0,0,0,0,0,0,0,1], \
+             [1,0,0,0,0,0,0,0,0,0,1], \
+             [1,0,0,0,0,3,0,0,0,0,1], \
+             [1,0,0,0,0,0,0,0,3,0,1], \
+             [1,0,0,3,0,0,0,0,0,0,1], \
+             [1,0,0,0,0,0,0,0,0,0,1], \
+             [1,0,0,0,0,0,0,0,0,0,1], \
+             [1,0,0,0,4,0,6,0,0,0,1], \
+             [1,1,1,1,1,1,1,1,1,1,1]]
+
     # initialize variables and sprite lists
-    wall = WallSprite(screen, 0, 0)
-    wall2 = WallSprite(screen, 1, 0)
-    wall3 = WallSprite(screen, 0, 1)
+    walls = []
+    maze_walls = []
+    traps = []
+
+    y = 0
+    for row in board:
+        x = 0
+        for col in row:
+            if (col == 1):
+                walls.append(WallSprite(screen, x, y))
+            if (col == 2):
+                maze_walls.append(WallSprite(screen, x, y))
+            if (col == 3):
+                traps.append(TrapSprite(screen, x, y))
+            if (col == 4):
+                switch = SwitchSprite(screen, x, y)
+            if (col == 5):
+                goal = GoalSprite(screen, x, y)
+            if (col == 6):
+                player = PlayerSprite(screen, x, y)
+            x += 1
+        y += 1
 
     # game loop
     while True:
@@ -82,14 +159,32 @@ def main_loop():
             elif event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     sys.exit()
+                elif event.key == K_LEFT:
+                    if board[player.y][player.x - 1] != 1:
+                        player.move_left()
+                elif event.key == K_RIGHT:
+                    if board[player.y][player.x + 1] != 1:
+                        player.move_right()
+                elif event.key == K_UP:
+                    if board[player.y - 1][player.x] != 1:
+                        player.move_up()
+                elif event.key == K_DOWN:
+                    if board[player.y + 1][player.x] != 1:
+                        player.move_down()
                 
 
         # draw sprites on screen
         screen.fill(BACKGROUND_COLOR)
 
-        wall.update()
-        wall2.update()
-        wall3.update()
+        for wall in walls:
+            wall.update()
+        for maze_wall in maze_walls:
+            maze_wall.update()
+        for trap in traps:
+            trap.update()
+        switch.update()
+        goal.update()
+        player.update()
 
         # refresh screen
         pygame.display.flip()
