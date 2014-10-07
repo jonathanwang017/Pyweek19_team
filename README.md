@@ -27,6 +27,7 @@ music loop for title screen
 hit wall sfx  
 spike trap sfx  
 finish level sfx  
+step on switch sfx
 
 
 Graphics
