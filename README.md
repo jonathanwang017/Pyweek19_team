@@ -40,6 +40,7 @@ goal
 
 Tenative Level Layout
 =====================
+\*
 	     -----
         |  G  |
      ---       ---
@@ -53,6 +54,7 @@ Tenative Level Layout
      ---       ---
         | B S |
          -----
+\*
 
 From a design standpoint this layout is not square and it is easy to create
 dead ends for the maze
