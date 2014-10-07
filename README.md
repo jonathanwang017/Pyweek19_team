@@ -38,25 +38,6 @@ button
 goal
 
 
-Tenative Level Layout
-=====================
-	   -----
-      |  G  |
-    --       --
-   |           |
- --             --
-|                 |
-|                 |
-|                 |
- --             --
-   |           |
-    --       --
-      | B S |
-       -----
-
-From a design standpoint this layout is not square and it is easy to create
-dead ends for the maze
-
 
 
 
