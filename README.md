@@ -37,6 +37,8 @@ wall
 background  
 button  
 goal  
+spikes  
+
 
 
 
