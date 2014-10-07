@@ -22,20 +22,20 @@ Enemies - need to decide how to implement
 
 Audio (mchawla)
 ===============
-music loop for game
-music loop for title screen
-hit wall sfx
-spike trap sfx
-finish level sfx
+music loop for game  
+music loop for title screen  
+hit wall sfx  
+spike trap sfx  
+finish level sfx  
 
 
 Graphics
 ========
-player
-wall
-background
-button
-goal
+player  
+wall  
+background  
+button  
+goal  
 
 
 
