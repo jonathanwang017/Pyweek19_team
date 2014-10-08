@@ -1,6 +1,7 @@
 import os, pygame, math, sys
 import pygame._view
 from pygame.locals import *
+from levels import levels
 
 # directory variables
 main_dir = os.path.split(os.path.abspath(__file__))[0]
@@ -100,30 +101,9 @@ def main_loop():
     pygame.display.set_caption('Pyweek19')
     pygame.mouse.set_visible(0)
 
-    # initialize board
-    board = [[0,0,0,0,0,0,0,0,0,0,0], \
-             [0,0,0,0,0,0,0,0,0,0,0], \
-             [0,0,0,0,0,0,0,0,0,0,0], \
-             [0,0,0,0,0,0,0,0,0,0,0], \
-             [0,0,0,0,0,0,0,0,0,0,0], \
-             [0,0,0,0,0,0,0,0,0,0,0], \
-             [0,0,0,0,0,0,0,0,0,0,0], \
-             [0,0,0,0,0,0,0,0,0,0,0], \
-             [0,0,0,0,0,0,0,0,0,0,0], \
-             [0,0,0,0,0,0,0,0,0,0,0], \
-             [0,0,0,0,0,0,0,0,0,0,0]]
-
-    board = [[1,1,1,1,1,1,1,1,1,1,1], \
-             [1,0,0,0,0,5,0,0,0,0,1], \
-             [1,0,0,0,0,0,0,0,0,0,1], \
-             [1,0,0,0,0,0,0,0,0,0,1], \
-             [1,0,0,0,0,3,0,0,0,0,1], \
-             [1,0,0,0,0,0,0,0,3,0,1], \
-             [1,0,0,3,0,0,0,0,0,0,1], \
-             [1,0,0,0,0,0,0,0,0,0,1], \
-             [1,0,0,0,0,0,0,0,0,0,1], \
-             [1,0,0,0,4,0,6,0,0,0,1], \
-             [1,1,1,1,1,1,1,1,1,1,1]]
+    # initialize level
+    level_count = 0
+    level = levels[level_count]
 
     # initialize variables and sprite lists
     walls = []
@@ -131,7 +111,7 @@ def main_loop():
     traps = []
 
     y = 0
-    for row in board:
+    for row in level:
         x = 0
         for col in row:
             if (col == 1):
@@ -160,16 +140,16 @@ def main_loop():
                 if event.key == K_ESCAPE:
                     sys.exit()
                 elif event.key == K_LEFT:
-                    if board[player.y][player.x - 1] != 1:
+                    if level[player.y][player.x - 1] != 1:
                         player.move_left()
                 elif event.key == K_RIGHT:
-                    if board[player.y][player.x + 1] != 1:
+                    if level[player.y][player.x + 1] != 1:
                         player.move_right()
                 elif event.key == K_UP:
-                    if board[player.y - 1][player.x] != 1:
+                    if level[player.y - 1][player.x] != 1:
                         player.move_up()
                 elif event.key == K_DOWN:
-                    if board[player.y + 1][player.x] != 1:
+                    if level[player.y + 1][player.x] != 1:
                         player.move_down()
                 
 
