@@ -12,6 +12,8 @@ SCREEN_X = 352
 SCREEN_Y = 352
 TILE_SIZE = 32
 
+level_count = 0
+level = []
 
 # image constants
 WALL_IMG = 'block.gif'
@@ -92,6 +94,37 @@ class PlayerSprite(pygame.sprite.Sprite):
     def move_right(self):
         self.x += 1
 
+def check_collision(x, y):
+    if level[y][x] == 1:
+        return True
+    if level[y][x] == 2:
+        return True
+    return False
+
+def check_death(x, y):
+    if level[y][x] == 3:
+        return True
+    return False
+
+def check_switch(x, y):
+    if level[y][x] == 4:
+        return True
+    return False
+
+def check_goal(x, y):
+    if level[y][x] == 5:
+        return True
+    return False
+
+def next_level():
+    global level_count
+    level_count += 1
+    if level_count >= len(levels):
+        sys.exit()
+    main_loop()
+
+def restart():
+    main_loop()
 
 
 def main_loop():
@@ -100,9 +133,9 @@ def main_loop():
     screen = pygame.display.set_mode((SCREEN_X, SCREEN_Y))
     pygame.display.set_caption('Pyweek19')
     pygame.mouse.set_visible(0)
+    global level_count, level
 
     # initialize level
-    level_count = 0
     level = levels[level_count]
 
     # initialize variables and sprite lists
@@ -132,6 +165,12 @@ def main_loop():
     # game loop
     while True:
 
+        if check_goal(player.x, player.y):
+            next_level()
+
+        if check_death(player.x, player.y):
+            restart()
+
         # check event queue
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -140,16 +179,16 @@ def main_loop():
                 if event.key == K_ESCAPE:
                     sys.exit()
                 elif event.key == K_LEFT:
-                    if level[player.y][player.x - 1] != 1:
+                    if not check_collision(player.x - 1, player.y):
                         player.move_left()
                 elif event.key == K_RIGHT:
-                    if level[player.y][player.x + 1] != 1:
+                    if not check_collision(player.x + 1, player.y):
                         player.move_right()
                 elif event.key == K_UP:
-                    if level[player.y - 1][player.x] != 1:
+                    if not check_collision(player.x, player.y - 1):
                         player.move_up()
                 elif event.key == K_DOWN:
-                    if level[player.y + 1][player.x] != 1:
+                    if not check_collision(player.x, player.y + 1):
                         player.move_down()
                 
 
