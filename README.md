@@ -15,29 +15,6 @@ a sort of memory game with ghost players as hints every time player dies
 At the exit, fade screen and return player to starting location in next level
 
 
-Possible Add-Ons
-================
-Enemies - need to decide how to implement
-
-
-Audio (mchawla)
-===============
-music loop for game  
-music loop for title screen  
-hit wall sfx  
-spike trap sfx  
-finish level sfx  
-step on switch sfx
-
-
-Graphics
-========
-player  
-wall  
-background  
-button  
-goal  
-spikes  
 
 
 
