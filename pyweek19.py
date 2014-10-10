@@ -200,7 +200,7 @@ def main_loop():
     while True:
 
         if check_goal(player.x, player.y):
-            bg_music_stop()
+            #bg_music_stop()
             next_level()
 
         if check_death(player.x, player.y):
@@ -256,6 +256,24 @@ def main_loop():
 
 
 def main():
+        # initialize pygame and variables
+    pygame.init()
+    screen = pygame.display.set_mode((SCREEN_X, SCREEN_Y))
+    pygame.display.set_caption('Pyweek19')
+    pygame.mouse.set_visible(0)
+    global level_count, level
+
+    # initialize level
+    level = levels[level_count]
+
+    # initialize variables and sprite lists
+    walls = []
+    maze_walls = []
+    traps = []
+    ghosts = []
+
+    #bg_music_stop()
+    bg_music()
     main_loop()
 
 if __name__ == '__main__':
