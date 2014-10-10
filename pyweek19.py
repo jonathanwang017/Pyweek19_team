@@ -15,6 +15,7 @@ TILE_SIZE = 32
 
 level_count = 0
 level = []
+switch_active = False
 
 # image constants
 WALL_IMG = 'block.gif'
@@ -117,9 +118,13 @@ def check_death(x, y):
     return False
 
 def check_switch(x, y):
+    global switch_active
     if level[y][x] == 4:
-        hit_switch()
+        if not switch_active:
+            hit_switch()
+            switch_active = True
         return True
+    switch_active = False
     return False
 
 def check_goal(x, y):
