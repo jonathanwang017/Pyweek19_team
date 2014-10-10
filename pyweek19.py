@@ -2,6 +2,7 @@ import os, pygame, math, sys
 import pygame._view
 from pygame.locals import *
 from levels import levels
+from audio import *
 
 # directory variables
 main_dir = os.path.split(os.path.abspath(__file__))[0]
@@ -22,6 +23,7 @@ PLAYER_IMG = 'player.gif'
 SWITCH_IMG = 'switch.gif'
 GOAL_IMG = 'goal_animation.gif'
 PLAYER_IMG = 'player.gif'
+GHOST_IMG = 'ghost.gif'
 
 
 BACKGROUND_COLOR = (222, 222, 222)
@@ -70,6 +72,10 @@ class GoalSprite(TileSprite):
     def __init__(self, screen, x, y):
         TileSprite.__init__(self, screen, x, y, GOAL_IMG)
 
+class GhostSprite(TileSprite):
+    def __init__(self, screen, x, y):
+        TileSprite.__init__(self, screen, x, y, GHOST_IMG)
+
 class PlayerSprite(pygame.sprite.Sprite):
     def __init__(self, screen, x, y):
         pygame.sprite.Sprite.__init__(self)
@@ -96,18 +102,23 @@ class PlayerSprite(pygame.sprite.Sprite):
 
 def check_collision(x, y):
     if level[y][x] == 1:
+        hit_wall()
         return True
     if level[y][x] == 2:
+        hit_wall()
         return True
     return False
 
 def check_death(x, y):
     if level[y][x] == 3:
         return True
+    if level[y][x] == 7:
+        return True
     return False
 
 def check_switch(x, y):
     if level[y][x] == 4:
+        hit_switch()
         return True
     return False
 
@@ -121,6 +132,7 @@ def next_level():
     level_count += 1
     if level_count >= len(levels):
         sys.exit()
+    level_end()
     main_loop()
 
 def restart():
@@ -142,6 +154,7 @@ def main_loop():
     walls = []
     maze_walls = []
     traps = []
+    ghosts = [] 
 
     y = 0
     for row in level:
@@ -159,6 +172,9 @@ def main_loop():
                 goal = GoalSprite(screen, x, y)
             if (col == 6):
                 player = PlayerSprite(screen, x, y)
+            if (col == 7):
+                traps.append(TrapSprite(screen, x, y))
+                ghosts.append(GhostSprite(screen, x, y))
             x += 1
         y += 1
 
@@ -169,6 +185,7 @@ def main_loop():
             next_level()
 
         if check_death(player.x, player.y):
+            level[player.y][player.x] = 7
             restart()
 
         # check event queue
@@ -197,6 +214,8 @@ def main_loop():
 
         for wall in walls:
             wall.update()
+        for ghost in ghosts:
+            ghost.update()
         if check_switch(player.x, player.y):
             for maze_wall in maze_walls:
                 maze_wall.update()
