@@ -6,6 +6,7 @@
 # 4 : switch
 # 5 : goal
 # 6 : player
+# 7 : ghost
 
 
 
