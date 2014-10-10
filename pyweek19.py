@@ -146,6 +146,8 @@ def next_level():
 def restart():
     main_loop()
 
+#pygame.mixer.music.load('Pyweek_BG_1.wav')
+
 background = pygame.image.load(TITLE_IMG)
 backgroundRect = background.get_rect()
 
@@ -166,7 +168,11 @@ def main_loop():
     walls = []
     maze_walls = []
     traps = []
-    ghosts = [] 
+    ghosts = []
+
+    #bg_music_stop()
+    bg_music()
+
 
     y = 0
     for row in level:
@@ -194,6 +200,7 @@ def main_loop():
     while True:
 
         if check_goal(player.x, player.y):
+            bg_music_stop()
             next_level()
 
         if check_death(player.x, player.y):

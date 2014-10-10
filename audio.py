@@ -10,6 +10,10 @@ def play_sound(sound, time):
 	else:
 		sound.play(maxtime = time)
 
+def stop_sound(sound):
+    sound = pygame.mixer.Sound(sound)
+    sound.stop()
+
 def hit_wall():
 	play_sound(directory + 'hitwall_sfx.wav', 0)
 
@@ -21,3 +25,9 @@ def hit_switch():
 
 def step_spike():
 	play_sound(directory + 'spikestep_sfx.wav', 0)
+
+def bg_music():
+    play_sound('Pyweek_BG_1.wav', 0)
+
+def bg_music_stop():
+    stop_sound('Pyweek_BG_1.wav')
