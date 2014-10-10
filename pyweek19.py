@@ -25,6 +25,7 @@ SWITCH_IMG = 'switch.gif'
 GOAL_IMG = 'goal_animation.gif'
 PLAYER_IMG = 'player.gif'
 GHOST_IMG = 'ghost.gif'
+TITLE_IMG = 'title.gif'
 
 
 BACKGROUND_COLOR = (222, 222, 222)
@@ -145,6 +146,10 @@ def next_level():
 def restart():
     main_loop()
 
+background = pygame.image.load(TITLE_IMG)
+backgroundRect = background.get_rect()
+
+
 
 def main_loop():
     # initialize pygame and variables
@@ -217,7 +222,12 @@ def main_loop():
                 
 
         # draw sprites on screen
-        screen.fill(BACKGROUND_COLOR)
+        #screen.fill(BACKGROUND_COLOR)
+
+        if level_count == 0:
+            screen.blit(background,backgroundRect)
+        else:
+            screen.fill(BACKGROUND_COLOR)
 
         for wall in walls:
             wall.update()
