@@ -197,10 +197,11 @@ def main_loop():
 
         for wall in walls:
             wall.update()
-        for maze_wall in maze_walls:
-            maze_wall.update()
-        for trap in traps:
-            trap.update()
+        if check_switch(player.x, player.y):
+            for maze_wall in maze_walls:
+                maze_wall.update()
+            for trap in traps:
+                trap.update()
         switch.update()
         goal.update()
         player.update()
