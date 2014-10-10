@@ -112,8 +112,10 @@ def check_collision(x, y):
 
 def check_death(x, y):
     if level[y][x] == 3:
+        step_spike()
         return True
     if level[y][x] == 7:
+        step_spike()
         return True
     return False
 
