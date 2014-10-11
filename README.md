@@ -15,6 +15,9 @@ a sort of memory game with ghost players as hints every time player dies
 At the exit, fade screen and return player to starting location in next level
 
 
+This is just a gimmicky little project to participate in Pyweek 
+
+
 
 
 
