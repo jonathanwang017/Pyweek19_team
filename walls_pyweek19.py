@@ -5,8 +5,8 @@ from levels import levels
 from audio import *
 
 # directory variables
-main_dir = os.path.split(os.path.abspath(__file__))[0]
-data_dir = os.path.join(main_dir, '')
+#main_dir = os.path.split(os.path.abspath(__file__))[0]
+#data_dir = os.path.join(main_dir, '')
 
 # screen constants
 SCREEN_X = 352
@@ -32,11 +32,11 @@ BACKGROUND_COLOR = (222, 222, 222)
 
 # function to load image
 def load_image(name, colorkey=None):
-    fullname = os.path.join(data_dir, name)
+    #fullname = os.path.join(data_dir, name)
     try:
-        image = pygame.image.load(fullname)
+        image = pygame.image.load(name)
     except pygame.error:
-        print ('Cannot load image:', fullname)
+        print ('Cannot load image:', name)
         raise SystemExit(str(pygame.compat.geterror()))
     image = image.convert_alpha()
     if colorkey is not None:
