@@ -1,7 +1,8 @@
 import pygame
 pygame.mixer.pre_init(frequency=44100, size=-16, channels=1, buffer=4096)
 
-directory = 'data/'
+directory = ''
+
 
 def play_sound(sound, time):
 	sound = pygame.mixer.Sound(sound)
@@ -27,7 +28,10 @@ def step_spike():
 	play_sound(directory + 'spikestep_sfx.wav', 0)
 
 def bg_music():
-    play_sound('Pyweek_BG_1.wav', 0)
+	bgm = pygame.mixer.Sound('Pyweek_BG_1.wav')	
+	bgm.set_volume(0.3)
+	bgm.play()
 
 def bg_music_stop():
-    stop_sound('Pyweek_BG_1.wav')
+	bgm = pygame.mixer.Sound('Pyweek_BG_1.wav')	
+	bgm.stop()
