@@ -1,0 +1,3 @@
+Traceback (most recent call last):
+  File "walls_pyweek19.py", line 151, in <module>
+pygame.error: Couldn't open title.gif
